@@ -1,0 +1,73 @@
+---
+title: "Presentation 1"
+subtitle: "CPSC 292 Section 2-- (Hansen)"
+author: "Robert Shellenberger"
+date: "10/05/2022"
+output: html_notebook
+---
+
+```{r}
+library(tidyr)
+library(openxlsx)
+library(ggplot2)
+
+game_logs_shortest_csv <- read.xlsx("game_logs_shortest.csv.xlsx")
+var1 <- game_logs_shortest_csv[1:2414,]
+
+```
+
+```{r}
+
+
+ggplot(var1,aes(length_minutes,v_hits + h_hits))+
+  geom_point(aes(color=ifelse(length_outs<= 54,"Normal Length","Extra Innings")))+
+  labs(x="Length in Minutes", y="Number of Hits", color="Length of Game")+
+  ggtitle("Length in Minutes vs Number of Hits")+
+  theme_minimal()+
+    theme(plot.title = element_text(hjust=0.5))
+
+
+
+```
+
+```{r}
+
+ggplot(var1)+
+  geom_bar(aes(x=day_night,y=attendance,fill=day_of_week),stat="identity")+
+  labs(x="Time of Day",y="Total Attendance",fill="Day of Week")+
+  ggtitle("Time of Day vs Total Attendance Over Year")+
+  theme_minimal()+
+  theme(plot.title = element_text(hjust=0.5))
+
+
+```
+
+```{r}
+pitcher.stat <- var1[,43:44]
+
+pitcher.starts <-  function(x){
+
+  sum(pitcher.stat[,1]==x) + sum(pitcher.stat[,2]==x)
+
+  
+}
+
+pitcher.starts("Bartolo Colon")
+
+pitcher.names <- c("Bartolo Colon","Greg Maddux","Andy Pettitte")
+var2 <- data.frame(rep(NA,3),rep(NA,3))
+
+for(x in length(pitcher.names)){
+  
+  var2[x,1] <- pitcher.names[x]
+  var2[x,2] <- pitcher.starts(pitcher.names[x])
+}
+
+
+```
+
+```{r}
+
+plot(x=)
+
+```
